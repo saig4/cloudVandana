@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Basic Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .calculator {
+            width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background: black;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="text"] {
+            width: 100%;
+            margin-bottom: 10px;
+			margin-left:-10px;
+            padding: 10px;
+        }
+        button {
+            width: 70px;
+            height: 50px;
+            font-size: 18px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="result">
+        <br>
+        <button onclick="appendToResult('1')">1</button>
+        <button onclick="appendToResult('2')">2</button>
+        <button onclick="appendToResult('3')">3</button>
+		<button style=background-color:#12EEF5
+		onclick="clearResult()">AC</button>
+        
+        <br>
+        <button onclick="appendToResult('4')">4</button>
+        <button onclick="appendToResult('5')">5</button>
+        <button onclick="appendToResult('6')">6</button>
+        <button onclick="appendOperator('-')">-</button>
+        <br>
+        <button onclick="appendToResult('7')">7</button>
+        <button onclick="appendToResult('8')">8</button>
+        <button onclick="appendToResult('9')">9</button>
+        <button onclick="appendOperator('*')">*</button>
+        <br>
+        <button onclick="appendToResult('0')">0</button>
+        <button onclick="calculateResult()">=</button>
+		<button onclick="appendOperator('+')">+</button>
+        <button onclick="appendOperator('/')">/</button>
+    </div>
+    
+    <script>
+        let currentInput = '';
+        let currentOperator = '';
+        let previousInput = '';
+
+        function appendToResult(value) {
+            currentInput += value;
+            document.getElementById('result').value = currentInput;
+        }
+
+        function appendOperator(operator) {
+            if (currentInput !== '') {
+                currentOperator = operator;
+                previousInput = currentInput;
+                currentInput = '';
+            }
+        }
+
+        function clearResult() {
+            currentInput = '';
+            currentOperator = '';
+            previousInput = '';
+            document.getElementById('result').value = '';
+        }
+
+        function calculateResult() {
+            let result = 0;
+            const num1 = parseFloat(previousInput);
+            const num2 = parseFloat(currentInput);
+            if (currentOperator === '+') {
+                result = num1 + num2;
+            } else if (currentOperator === '-') {
+                result = num1 - num2;
+            } else if (currentOperator === '*') {
+                result = num1 * num2;
+            } else if (currentOperator === '/') {
+                if (num2 !== 0) {
+                    result = num1 / num2;
+                } else {
+                    result = "Cannot divide by zero";
+                }
+            }
+            document.getElementById('result').value = result;
+            currentInput = result.toString();
+            currentOperator = '';
+            previousInput = '';
+        }
+    </script>
+</body>
+</html>
